@@ -1,10 +1,11 @@
-var expect = require( 'expect.js' );
-var Vote = require( '../../../server/votes/votes.js' );
+var expect = require( 'chai' ).expect;
+var Vote = require( '../../../server/votes/votes' );
+var User = require( '../../../server/users/users' );
 
 
-describe( 'Vote', function( done ) {
+describe( 'Vote', function( ) {
 
-  describe( 'addVote', function () {
+  describe( 'addVote', function ( ) {
     it( 'should be a function', function () {
       expect( Vote.addVote ).to.be.a( 'function' );
     });
@@ -25,9 +26,26 @@ describe( 'Vote', function( done ) {
     });
   });
 
-  describe( 'getSessMovieVotes', function() {
+  describe( 'getSessMovieVotes', function( ) {
     it( 'should be a function', function() {
       expect( Vote.getSessMovieVotes ).to.be.a( 'function' );
     });
+
+    it( 'should get votes for a given session and movie', function( done ) {
+      Vote.addVote( 1, 1, true ).then( function() {
+        Vote.addVote( 2, 1, true )
+        .then( function() {
+          Vote.getSessMovieVotes( 1, 1 ).then( function( votes ) {
+            expect( votes ).to.be.length( 2 );
+            done();
+          });
+        });
+      });
+      // User.findAll({ where: {} }).then( function( users ) {
+      //   console.log( users );
+      // });
+    });
+
   });
+
 });

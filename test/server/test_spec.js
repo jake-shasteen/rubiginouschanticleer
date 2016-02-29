@@ -7,8 +7,8 @@ var Sessions_Users = require( '../../server/sessions_users/sessions_users' );
 var Votes = require( '../../server/votes/votes' );
 
 // setup
-// before();
-beforeEach( function() {
+// beforeEach();
+before( function() {
   Votes.sync({force: true})
   .then( function() {
     Sessions_Users.sync({force: true})
